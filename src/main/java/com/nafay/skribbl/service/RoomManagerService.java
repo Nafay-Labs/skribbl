@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.nafay.skribbl.model.Room;
 
-@Service
+// @Service
 public class RoomManagerService {
-  private ConcurrentHashMap<String, Room> manager;
+  // private ConcurrentHashMap<String, Room> manager;
 
-  
+
 }
