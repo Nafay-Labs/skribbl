@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ChatMessage {
   private UUID playerId;
-  private String sender;
+  private String username;
   private String content;
   private MessageType type;
 }
