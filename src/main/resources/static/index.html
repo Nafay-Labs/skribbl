@@ -3,53 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spring Boot WebSocket Chat Application</title>
+  <title>Skribbl - Ultimate Drawing</title>
   <link rel="stylesheet" href="/css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <noscript>
-    <h2>Sorry! Your browser doesn't support Javascript</h2>
-  </noscript>
-
-  <div id="username-page">
-      <div class="username-page-container">
-          <h1 class="title">Type your username to enter the Chatroom</h1>
-          <form id="usernameForm" name="usernameForm">
-              <div class="form-group">
-                  <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
-              </div>
-              <div class="form-group">
-                  <button type="submit" class="accent username-submit">Start Chatting</button>
-              </div>
-          </form>
-      </div>
+  <!-- Background Animated Elements -->
+  <div class="bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
   </div>
 
-  <div id="chat-page" class="hidden">
-      <div class="chat-container">
-          <div class="chat-header">
-              <h2>Spring WebSocket Chat Demo - By Alibou</h2>
-          </div>
-          <div class="connecting">
-              Connecting...
-          </div>
-          <ul id="messageArea">
-
-          </ul>
-          <form id="messageForm" name="messageForm">
-              <div class="form-group">
-                  <div class="input-group clearfix">
-                      <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-                      <button type="submit" class="primary">Send</button>
-                  </div>
-              </div>
-          </form>
+  <!-- Intro Screen -->
+  <div id="intro-screen" class="screen">
+    <div class="glass-card">
+      <h1 class="logo">Skribbl<span>.io</span></h1>
+      <p class="subtitle">Draw, guess, and win!</p>
+      
+      <div id="register-section" class="form-section">
+        <input type="text" id="nickname-input" placeholder="Enter your nickname..." autocomplete="off" />
+        <button id="register-btn" class="btn-primary">Play Now</button>
       </div>
+
+      <div id="room-section" class="form-section hidden">
+        <p class="welcome-text">Welcome, <span id="display-nickname"></span>!</p>
+        <button id="create-room-btn" class="btn-secondary">Create Private Room</button>
+        <div class="divider"><span>OR</span></div>
+        <input type="text" id="room-id-input" placeholder="Paste Room ID here..." autocomplete="off" />
+        <button id="join-room-btn" class="btn-primary">Join Room</button>
+      </div>
+    </div>
   </div>
 
+  <!-- Game Screen -->
+  <div id="game-screen" class="screen hidden">
+    <div class="game-header">
+      <div class="room-info">Room ID: <span id="game-room-id"></span></div>
+      <div class="tools-panel">
+        <input type="color" id="color-picker" value="#ffffff">
+        <input type="range" id="brush-size" min="1" max="20" value="5">
+      </div>
+    </div>
+    
+    <div class="game-container">
+      <div class="canvas-wrapper">
+        <canvas id="drawing-board" width="800" height="600"></canvas>
+      </div>
+      
+      <div class="chat-wrapper glass-panel">
+        <div class="chat-header">
+          <h3>Chat</h3>
+        </div>
+        <ul id="chat-messages"></ul>
+        <form id="chat-form">
+          <input type="text" id="chat-input" placeholder="Guess the word..." autocomplete="off" />
+        </form>
+      </div>
+      <div id="lobby-overlay" class="overlay hidden">
+      <div class="glass-card">
+        <h2 class="lobby-title">Room Lobby</h2>
+        <p class="lobby-subtitle">Waiting for more players...</p>
+        <p class="lobby-room-id">Room ID: <span id="lobby-room-id-value" style="font-weight: bold; color: var(--secondary);"></span></p>
+        <ul id="lobby-player-list"></ul>
+        <button id="start-game-btn" class="btn-primary hidden">Start Game</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-  <script src="/js/main.js?v=1"></script>
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -20,7 +20,9 @@ public class Room {
   private int currentRound;
   private int maxRounds;
   private Player currentDrawer;
+  private Player admin;
   private String currentWord;
   private Long turnEndTime;
   private List<String> wordHistory;
+  private List<DrawEvent> currentRoundStrokes;
 }

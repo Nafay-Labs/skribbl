@@ -28,9 +28,14 @@ public class RoomManagerService {
     Player player = playerRepository.findByPlayerId(playerId).orElseThrow(() -> new PlayerNotFoundException("Player not found"));
 
     Room room = manager.get(roomId);
-    if (room != null && room.getPlayers().size() < 10 && room.getState().equals(GameState.LOBBY) && !room.getPlayers().contains(player)) {
-      room.getPlayers().add(player);
-      return player;
+    if (room != null && room.getState().equals(GameState.LOBBY)) {
+      if (room.getPlayers().contains(player)) {
+        return player;
+      }
+      if (room.getPlayers().size() < 10) {
+        room.getPlayers().add(player);
+        return player;
+      }
     }
 
     return null;
@@ -42,12 +47,30 @@ public class RoomManagerService {
       Room room = Room.builder()
         .roomID(roomId)
         .players(new ArrayList<>(List.of(player)))
+        .admin(player)
         .state(GameState.LOBBY)
+        .currentRoundStrokes(new ArrayList<>())
         .build();
       manager.put(roomId, room);
       return room;
     }
 
     throw new PlayerAlreadyInRoomException("Player is already in a room");
+  }
+
+  public void leaveRoom(String roomId, String username) {
+    Room room = manager.get(roomId);
+    if (room != null) {
+      room.getPlayers().removeIf(p -> p.getNickname().equals(username));
+      
+      // If room is empty, remove it
+      if (room.getPlayers().isEmpty()) {
+        manager.remove(roomId);
+      }
+    }
+  }
+
+  public Room getRoom(String roomId) {
+    return manager.get(roomId);
   }
 }
